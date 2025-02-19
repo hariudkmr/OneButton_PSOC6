@@ -41,7 +41,7 @@ OB_Tick(&button1);
 
 void OB_Init(OneButton_t* btn) {
     btn->port = NULL;
-    btn->pin = -1;
+    btn->pin = INVALID_PIN;
 
     btn->debounce_ms = 50;
     btn->click_ms = 400;
@@ -98,7 +98,7 @@ bool OB_Debounce(OneButton_t* btn, bool newLevel) {
 }
 
 void OB_Tick(OneButton_t* btn) {
-    if (btn->pin >= 0) {
+    if (btn->pin != INVALID_PIN) {
         bool rawLevel = (HAL_GPIO_ReadPin(btn->port, btn->pin) == btn->buttonPressedLevel);
         OB_FSM(btn, OB_Debounce(btn, rawLevel == btn->buttonPressedLevel));
     }
@@ -127,15 +127,15 @@ void OB_Reset(OneButton_t* btn) {
     btn->idleState = false;
 }
 
-uint16_t OB_GetNumberClicks(OneButton_t* btn) {
+uint16_t OB_GetNumberClicks(const OneButton_t* btn) {
     return btn->nClicks;
 }
 
-bool OB_IsIdle(OneButton_t* btn) {
+bool OB_IsIdle(const OneButton_t* btn) {
     return btn->state == OCS_INIT;
 }
 
-bool OB_IsLongPressed(OneButton_t* btn) {
+bool OB_IsLongPressed(const OneButton_t* btn) {
     return btn->state == OCS_PRESS;
 }
 
@@ -173,19 +173,19 @@ void OB_AttachIdle(OneButton_t* btn, OneButtonCallback cb) {
     btn->idleFunc = cb;
 }
 
-uint16_t OB_GetPressedMs(OneButton_t* btn) {
+uint16_t OB_GetPressedMs(const OneButton_t* btn) {
     return (btn->now - btn->startTime);
 }
 
-uint16_t OB_GetPin(OneButton_t* btn) {
+uint16_t OB_GetPin(const OneButton_t* btn) {
     return btn->pin;
 }
 
-OneButtonState OB_GetState(OneButton_t* btn) {
+OneButtonState OB_GetState(const OneButton_t* btn) {
     return btn->state;
 }
 
-bool OB_GetDebouncedValue(OneButton_t* btn) {
+bool OB_GetDebouncedValue(const OneButton_t* btn) {
     return btn->debouncedLevel;
 }
 

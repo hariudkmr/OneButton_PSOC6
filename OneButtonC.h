@@ -19,6 +19,9 @@
 #include <stdbool.h>
 #include "stm32f4xx_hal.h" // Include the HAL library appropriate for your MCU
 
+// Define the invalid pin
+#define INVALID_PIN UINT16_MAX
+
 // Callback type
 typedef void (*OneButtonCallback)(void);
 
@@ -84,9 +87,9 @@ void OB_Setup(OneButton_t* btn, GPIO_TypeDef* port, uint16_t pin, bool activeLow
 bool OB_Debounce(OneButton_t* btn, bool newLevel);
 void OB_Tick(OneButton_t* btn /*, bool rawLevel*/);
 void OB_Reset(OneButton_t* btn);
-uint16_t  OB_GetNumberClicks(OneButton_t* btn);
-bool OB_IsIdle(OneButton_t* btn);
-bool OB_IsLongPressed(OneButton_t* btn);
+uint16_t OB_GetNumberClicks(const OneButton_t* btn);
+bool OB_IsIdle(const OneButton_t* btn);
+bool OB_IsLongPressed(const OneButton_t* btn);
 
 void OB_SetDebounceMs(OneButton_t* btn, int16_t ms);
 void OB_SetClickMs(OneButton_t* btn, uint16_t ms);
@@ -105,10 +108,10 @@ void OB_AttachDuringLongPress(OneButton_t* btn, OneButtonCallback cb);
 void OB_AttachIdle(OneButton_t* btn, OneButtonCallback cb);
 
 // Getter function for long press functions
-uint16_t OB_GetPressedMs(OneButton_t* btn);
-uint16_t OB_GetPin(OneButton_t* btn);
-OneButtonState OB_GetState(OneButton_t* btn);
-bool OB_GetDebouncedValue(OneButton_t* btn);
+uint16_t OB_GetPressedMs(const OneButton_t* btn);
+uint16_t OB_GetPin(const OneButton_t* btn);
+OneButtonState OB_GetState(const OneButton_t* btn);
+bool OB_GetDebouncedValue(const OneButton_t* btn);
 
 // Internal state machine functions
 void OB_NewState(OneButton_t* btn, OneButtonState nextState);
