@@ -120,6 +120,10 @@ void OB_SetIdleMs(OneButton_t* btn, uint16_t ms) {
     btn->idle_ms = ms;
 }
 
+void OB_SetLongPressIntervalMs(OneButton_t* btn, uint16_t ms) {
+    btn->longPressIntervalMs = ms;
+}
+
 void OB_Reset(OneButton_t* btn) {
     btn->state = OCS_INIT;
     btn->nClicks = 0;

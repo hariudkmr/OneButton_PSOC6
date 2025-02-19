@@ -1,3 +1,5 @@
+## Note: this library is a WIP and not completely functional. 
+
 # STM32 OneButton Library
 
 This STM32 library is improving the usage of a singe button for input.
@@ -12,6 +14,33 @@ This code is a C port of the C++ Arduino library written by Matthias Hertel at
 
 You can find more details on this library at
 <http://www.mathertel.de/Arduino/OneButtonLibrary.aspx>
+
+
+## Basic STM32 Useage
+
+```c
+OneButton_t button1;  //declare as global
+uint16_t press_cnt = 0;
+
+
+OB_Init(&button1); // Init the button with default params
+OB_Setup(&button1, BTN_1_GPIO_Port, BTN_1_Pin, true); //config the button
+
+void B1_press() {                //basic function to count button presses     
+	  press_cnt++;
+}
+
+OB_AttachPress(&button1, B1_press); //attach the B1_press function to the Press action
+
+ while (1)
+  {
+	 OB_Tick(&button1);  //call ticks in main loop
+  }
+
+```
+
+
+> **Note:** NO information below has not been updated.
 
 
 
