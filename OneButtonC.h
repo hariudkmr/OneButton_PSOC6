@@ -22,6 +22,13 @@
 // Define the invalid pin
 #define INVALID_PIN UINT16_MAX
 
+//Define default values for INIT function
+#define DEFAULT_DEBOUNCE_MS            50
+#define DEFAULT_CLICK_MS               400
+#define DEFAULT_PRESS_MS               800
+#define DEFAULT_IDLE_MS                1000
+#define DEFAULT_LONG_PRESS_INTERVAL_MS 1000
+
 // Callback type
 typedef void (*OneButtonCallback)(void);
 

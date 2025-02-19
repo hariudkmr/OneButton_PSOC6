@@ -38,10 +38,10 @@ void OB_Init(OneButton_t* btn) {
     btn->pin = INVALID_PIN;
 
     // Set default timing parameters (in milliseconds)
-    btn->debounce_ms = 50;
-    btn->click_ms = 400;
-    btn->press_ms = 800;
-    btn->idle_ms = 1000;
+    btn->debounce_ms = DEFAULT_DEBOUNCE_MS;
+    btn->click_ms = DEFAULT_CLICK_MS;
+    btn->press_ms = DEFAULT_PRESS_MS;
+    btn->idle_ms = DEFAULT_IDLE_MS;
 
     // Initialize state values
     btn->state = OCS_INIT;
@@ -59,7 +59,7 @@ void OB_Init(OneButton_t* btn) {
     btn->maxClicks = 1;
 
     // Long press values initialization
-    btn->longPressIntervalMs = 0;
+    btn->longPressIntervalMs = DEFAULT_LONG_PRESS_INTERVAL_MS;
     btn->lastDuringLongPressTime = 0;
 
     // Nullify all callback pointers
