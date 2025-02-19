@@ -91,6 +91,7 @@ uint16_t OB_GetNumberClicks(const OneButton_t* btn);
 bool OB_IsIdle(const OneButton_t* btn);
 bool OB_IsLongPressed(const OneButton_t* btn);
 
+// Setter functions for intervals
 void OB_SetDebounceMs(OneButton_t* btn, int16_t ms);
 void OB_SetClickMs(OneButton_t* btn, uint16_t ms);
 void OB_SetPressMs(OneButton_t* btn, uint16_t ms);
@@ -107,7 +108,7 @@ void OB_AttachLongPressStop(OneButton_t* btn, OneButtonCallback cb);
 void OB_AttachDuringLongPress(OneButton_t* btn, OneButtonCallback cb);
 void OB_AttachIdle(OneButton_t* btn, OneButtonCallback cb);
 
-// Getter function for long press functions
+// Getter functions
 uint16_t OB_GetPressedMs(const OneButton_t* btn);
 uint16_t OB_GetPin(const OneButton_t* btn);
 OneButtonState OB_GetState(const OneButton_t* btn);
