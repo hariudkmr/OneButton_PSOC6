@@ -1,5 +1,6 @@
-## Note: this library is a WIP, readme below is in DRAFT, some functions might now work.
-- Best attempt to port over all OneButton functionality. Currently there is no ability for lamda or parameters in the callback functions as provided by OneButton.
+## Note: This library is a current WIP.
+- Most OneButton functionality is working. 
+- Currently there is no ability for lamda or parameters in the callback functions as provided by OneButton.
 
 # STM32 OneButton Library
 
@@ -10,11 +11,9 @@ This enables you to reuse the same button for multiple functions and lowers the 
 
 This is also a sample for implementing simple finite-state machines by using the simple pattern above.
 
-This code is a C port of the C++ Arduino library written by Matthias Hertel at
-<https://github.com/mathertel/OneButton>
+This code is a C port of the [OneButton](https://github.com/mathertel/OneButton) C++ Arduino library written by Matthias Hertel.
 
-You can find more details on this library at
-<http://www.mathertel.de/Arduino/OneButtonLibrary.aspx>
+You can find more details on the OneButton library at his personal [Webpage](http://www.mathertel.de/Arduino/OneButtonLibrary.aspx).
 
 ## Basic STM32 Usage Example
 
@@ -103,25 +102,29 @@ Here's a full list of events handled by this library:
 | `OB_AttachClick`        | Fires as soon as a single click press and release is detected.|
 | `OB_AttachDoubleClick`  | Fires as soon as a double click is detected.                  |
 | `OB_AttachMultiClick`   | Fires as soon as multiple clicks have been detected.          |
-| `OB_AttachLongPressStart` | Fires as soon as the button is held down for 800 milliseconds.|
+| `OB_AttachLongPressStart` | Fires as soon as the button is held down for the defined (ms).|
 | `OB_AttachDuringLongPress` | Fires periodically as long as the button is held down.        |
 | `OB_AttachLongPressStop` | Fires when the button is released after a long hold.          |
 
 ### Event Timing
 
-Valid events occur when `OB_Tick()` is called after a specified number of milliseconds. You can use the following functions to change the timing.
+Valid events occur when `OB_Tick()` is called after a specified number of (ms). You can use the following functions to change the timing.
 
 __Note:__ Attaching a double click will increase the delay for detecting a single click. If a double click event is not attached, the library will assume a valid single click after one click duration, otherwise it must wait for the double click timeout to pass. This is because a single click callback must not be triggered in case of a double click event.
 
 | Function                | Default    | Description                                                   |
 | ----------------------- | ---------- | ------------------------------------------------------------- |
-| `OB_SetDebounceMs(int)` | `50 msec`  | Period of time in which to ignore additional level changes.   |
-| `OB_SetClickMs(int)`    | `400 msec` | Timeout used to distinguish single clicks from double clicks. |
-| `OB_SetPressMs(int)`    | `800 msec` | Duration to hold a button to trigger a long press.            |
+| `OB_SetDebounceMs(int)` | `50 ms`  | Period of time in which to ignore additional level changes.   |
+| `OB_SetClickMs(int)`    | `400 ms` | Timeout used to distinguish single clicks from double clicks. |
+| `OB_SetPressMs(int)`    | `800 ms` | Duration to hold a button to trigger a long press.            |
+| `OB_SetIdleMs(int)`    | `1000 ms` | Duration of inactivity to consider the button idle.            |
+| `OB_SetLongPressMs(int)` | `0 ms` | Duration to hold a button to trigger a long press.            |
 
 You may change these default values but be aware that when you specify too short times it is hard to click twice or you will create a long press instead of a click.
 
-Set debounce ms to a negative value to only debounce on release. `OB_SetDebounceMs(-25);` will immediately update to a pressed state, and will debounce for 25ms going into the released state. This will expedite the `OB_AttachPress` callback function to run instantly.
+Set debounce (ms) to a negative value to only debounce on release. `OB_SetDebounceMs(-25);` will immediately update to a pressed state, and will debounce for 25ms going into the released state. This will expedite the `OB_AttachPress` callback function to run instantly.
+
+Note that long press is not activated by default as it will mask other button functions.
 
 ### Additional Functions
 
@@ -129,11 +132,11 @@ Set debounce ms to a negative value to only debounce on release. `OB_SetDebounce
 
 | Function                | Description                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------ |
-| `bool OB_IsLongPressed(const OneButton_t* btn)` | Detect whether or not the button is currently inside a long press.             |
-| `uint16_t OB_GetPressedMs(const OneButton_t* btn)` | Get the current number of milliseconds that the button has been held down for. |
-| `uint16_t OB_GetPin(const OneButton_t* btn)` | Get the button pin                                                          |
-| `OneButtonState OB_GetState(const OneButton_t* btn)` | Get the button state                                                        |
-| `bool OB_GetDebouncedValue(const OneButton_t* btn)` | Get the debounced button value                                              |
+| `OB_IsLongPressed(const OneButton_t* btn)` | Detect whether or not the button is currently inside a long press.             |
+| `OB_GetPressedMs(const OneButton_t* btn)` | Get the current number of (ms) that the button has been held down for. |
+| `OB_GetPin(const OneButton_t* btn)` | Get the button pin                                                          |
+| `OB_GetState(const OneButton_t* btn)` | Get the button state                                                        |
+| `OB_GetDebouncedValue(const OneButton_t* btn)` | Get the debounced button value                                              |
 
 ### `OB_Reset()`
 

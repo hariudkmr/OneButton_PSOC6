@@ -9,7 +9,7 @@
 // http://www.mathertel.de/License.aspx More information on:
 // http://www.mathertel.de/Arduino
 // -----
-// Feb 2025 : V0.1 Port from C++ Arduino library to C
+// Feb 20 2025 : V0.1 Port from C++ Arduino library to C with most functionality tested.
 // -----
 
 #ifndef ONEBUTTONC_H
@@ -27,7 +27,7 @@
 #define DEFAULT_CLICK_MS               400
 #define DEFAULT_PRESS_MS               800
 #define DEFAULT_IDLE_MS                1000
-#define DEFAULT_LONG_PRESS_INTERVAL_MS 1000
+#define DEFAULT_LONG_PRESS_INTERVAL_MS 0
 
 // Callback type
 typedef void (*OneButtonCallback)(void);
