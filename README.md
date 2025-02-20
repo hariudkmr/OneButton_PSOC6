@@ -89,7 +89,9 @@ while (1) {
 
 ### HAL Function
 
-Note that the 'OB_Tick()' function uses the `HAL_GPIO_ReadPin( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)` call to get the logic level of the pin and returns RESET(0) or SET(1) for the low and high states respectively. This is the only call to HAL in the library.
+Note that the 'OB_Tick()' function uses the `HAL_GPIO_ReadPin( GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)` call to get the logic level of the pin and returns RESET(0) or SET(1) for the low and high states respectively. 
+
+`HAL_GetTick()` is also called which requires that the SysTick timer be enabled and configured.
 
 ## State Events
 
