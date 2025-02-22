@@ -28,7 +28,8 @@ void B1_press() { // Basic function to count button presses
     press_cnt++;
 }
 
-OB_AttachPress(&button1, B1_press); // Attach the B1_press function to the Press action
+// Setup callback function
+OB_AttachCallback(&button1, OB_EVENT_PRESS, B1_press)
 
 while (1) {
     OB_Tick(&button1); // Call ticks in main loop
@@ -72,7 +73,7 @@ void B1_press() { // Basic function to count button presses
     press_cnt++;
 }
 
-OB_AttachPress(&button1, B1_press); // Attach the B1_press function to the Press action
+OB_AttachCallback(&button1, OB_EVENT_PRESS, B1_press); // Attach the B1_press function to the OB_EVENT_PRESS event for button1.
 ```
 
 ### Don't forget to `OB_Tick()`
@@ -96,15 +97,19 @@ Note that the 'OB_Tick()' function uses the `HAL_GPIO_ReadPin( GPIO_TypeDef* GPI
 
 Here's a full list of events handled by this library:
 
-| Attach Function         | Description                                                   |
+| One Button Events         | Description                                                   |
 | ----------------------- | ------------------------------------------------------------- |
-| `OB_AttachPress`        | Fires as soon as a press is detected.                         |
-| `OB_AttachClick`        | Fires as soon as a single click press and release is detected.|
-| `OB_AttachDoubleClick`  | Fires as soon as a double click is detected.                  |
-| `OB_AttachMultiClick`   | Fires as soon as multiple clicks have been detected.          |
-| `OB_AttachLongPressStart` | Fires as soon as the button is held down for the defined (ms).|
-| `OB_AttachDuringLongPress` | Fires periodically as long as the button is held down.        |
-| `OB_AttachLongPressStop` | Fires when the button is released after a long hold.          |
+| `OB_EV_PRESS`        | Fires as soon as a press is detected.                         |
+| `OB_EV_CLICK`        | Fires as soon as a single click press and release is detected.|
+| `OB_EV_DOUBLE_CLICK`  | Fires as soon as a double click is detected.                  |
+| `OB_EV_MULTI_CLICK`   | Fires as soon as multiple clicks have been detected.          |
+| `OB_EV_LONG_PRESS_START` | Fires as soon as the button is held down for the defined (ms).|
+| `OB_EV_LONG_PRESS_STOP` | Fires periodically as long as the button is held down.        |
+| `OB_EV_DURING_LONG_PRESS` | Fires when the button is released after a long hold.          |
+| `OB_EV_IDLE` | Fires when the button is determined to be idle.          |
+
+These event ares attached to the callback function using the generic attach function:
+`OB_AttachCallback(OneButton_t* btn, OneButtonEvent event, OneButtonCallback cb);`
 
 ### Event Timing
 
@@ -122,7 +127,7 @@ __Note:__ Attaching a double click will increase the delay for detecting a singl
 
 You may change these default values but be aware that when you specify too short times it is hard to click twice or you will create a long press instead of a click.
 
-Set debounce (ms) to a negative value to only debounce on release. `OB_SetDebounceMs(-25);` will immediately update to a pressed state, and will debounce for 25ms going into the released state. This will expedite the `OB_AttachPress` callback function to run instantly.
+Set debounce (ms) to a negative value to only debounce on release. `OB_SetDebounceMs(-25);` will immediately update to a pressed state, and will debounce for 25ms going into the released state. This will expedite the `OB_EV_PRESS` event callback function to run instantly.
 
 Note that long press is not activated by default as it will mask other button functions.
 
