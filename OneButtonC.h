@@ -86,6 +86,17 @@ typedef struct {
   OneButtonCallback idleFunc;
 } OneButton_t;
 
+typedef enum {
+  OB_EV_PRESS,
+  OB_EV_CLICK,
+  OB_EV_DOUBLE_CLICK,
+  OB_EV_MULTI_CLICK,
+  OB_EV_LONG_PRESS_START,
+  OB_EV_LONG_PRESS_STOP,
+  OB_EV_DURING_LONG_PRESS,
+  OB_EV_IDLE
+} OneButtonEvent;
+
 // ----- Function prototypes -----
 
 void OB_Init(OneButton_t* btn);
@@ -105,15 +116,8 @@ void OB_SetPressMs(OneButton_t* btn, uint16_t ms);
 void OB_SetIdleMs(OneButton_t* btn, uint16_t ms);
 void OB_SetLongPressIntervalMs(OneButton_t* btn, uint16_t ms);
 
-// Attach callback function Prototypes
-void OB_AttachPress(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachClick(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachDoubleClick(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachMultiClick(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachLongPressStart(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachLongPressStop(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachDuringLongPress(OneButton_t* btn, OneButtonCallback cb);
-void OB_AttachIdle(OneButton_t* btn, OneButtonCallback cb);
+// Replace all individual attach function prototypes with this single function
+bool OB_AttachCallback(OneButton_t* btn, OneButtonEvent event, OneButtonCallback cb);
 
 // Getter functions
 uint16_t OB_GetPressedMs(const OneButton_t* btn);

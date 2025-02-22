@@ -146,38 +146,52 @@ bool OB_IsLongPressed(const OneButton_t* btn) {
     return btn->state == OCS_PRESS;
 }
 
-void OB_AttachPress(OneButton_t* btn, OneButtonCallback cb) {
-    btn->pressFunc = cb;
-}
+bool OB_AttachCallback(OneButton_t* btn, OneButtonEvent event, OneButtonCallback cb) {
+    if (!btn) {
+        return false;
+    }
 
-void OB_AttachClick(OneButton_t* btn, OneButtonCallback cb) {
-    btn->clickFunc = cb;
-}
+    switch (event) {
+        case OB_EV_PRESS:
+            btn->pressFunc = cb;
+            break;
 
-void OB_AttachDoubleClick(OneButton_t* btn, OneButtonCallback cb) {
-    btn->doubleClickFunc = cb;
-    btn->maxClicks = btn->maxClicks > 2 ? btn->maxClicks : 2;
-}
+        case OB_EV_CLICK:
+            btn->clickFunc = cb;
+            break;
 
-void OB_AttachMultiClick(OneButton_t* btn, OneButtonCallback cb) {
-    btn->multiClickFunc = cb;
-    btn->maxClicks = btn->maxClicks > 100 ? btn->maxClicks : 100;
-}
+        case OB_EV_DOUBLE_CLICK:
+            btn->doubleClickFunc = cb;
+            btn->maxClicks = btn->maxClicks > 2 ? btn->maxClicks : 2;
+            break;
 
-void OB_AttachLongPressStart(OneButton_t* btn, OneButtonCallback cb) {
-    btn->longPressStartFunc = cb;
-}
+        case OB_EV_MULTI_CLICK:
+            btn->multiClickFunc = cb;
+            btn->maxClicks = btn->maxClicks > 100 ? btn->maxClicks : 100;
+            break;
 
-void OB_AttachLongPressStop(OneButton_t* btn, OneButtonCallback cb) {
-    btn->longPressStopFunc = cb;
-}
+        case OB_EV_LONG_PRESS_START:
+            btn->longPressStartFunc = cb;
+            break;
 
-void OB_AttachDuringLongPress(OneButton_t* btn, OneButtonCallback cb) {
-    btn->duringLongPressFunc = cb;
-}
+        case OB_EV_LONG_PRESS_STOP:
+            btn->longPressStopFunc = cb;
+            break;
 
-void OB_AttachIdle(OneButton_t* btn, OneButtonCallback cb) {
-    btn->idleFunc = cb;
+        case OB_EV_DURING_LONG_PRESS:
+            btn->duringLongPressFunc = cb;
+            break;
+
+        case OB_EV_IDLE:
+            btn->idleFunc = cb;
+            break;
+
+        default:
+            return false;  // Invalid event type
+    }
+
+    return true;
+
 }
 
 uint16_t OB_GetPressedMs(const OneButton_t* btn) {
