@@ -148,41 +148,41 @@ bool OB_IsLongPressed(const OneButton_t* btn) {
 
 bool OB_AttachCallback(OneButton_t* btn, OneButtonEvent event, OneButtonCallback cb) {
     if (!btn) {
-        return;
+        return false;
     }
 
     switch (event) {
-        case OB_EVENT_PRESS:
+        case OB_EV_PRESS:
             btn->pressFunc = cb;
             break;
 
-        case OB_EVENT_CLICK:
+        case OB_EV_CLICK:
             btn->clickFunc = cb;
             break;
 
-        case OB_EVENT_DOUBLE_CLICK:
+        case OB_EV_DOUBLE_CLICK:
             btn->doubleClickFunc = cb;
             btn->maxClicks = btn->maxClicks > 2 ? btn->maxClicks : 2;
             break;
 
-        case OB_EVENT_MULTI_CLICK:
+        case OB_EV_MULTI_CLICK:
             btn->multiClickFunc = cb;
             btn->maxClicks = btn->maxClicks > 100 ? btn->maxClicks : 100;
             break;
 
-        case OB_EVENT_LONG_PRESS_START:
+        case OB_EV_LONG_PRESS_START:
             btn->longPressStartFunc = cb;
             break;
 
-        case OB_EVENT_LONG_PRESS_STOP:
+        case OB_EV_LONG_PRESS_STOP:
             btn->longPressStopFunc = cb;
             break;
 
-        case OB_EVENT_DURING_LONG_PRESS:
+        case OB_EV_DURING_LONG_PRESS:
             btn->duringLongPressFunc = cb;
             break;
 
-        case OB_EVENT_IDLE:
+        case OB_EV_IDLE:
             btn->idleFunc = cb;
             break;
 

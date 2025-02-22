@@ -29,7 +29,7 @@ void B1_press() { // Basic function to count button presses
 }
 
 // Setup callback function
-OB_AttachCallback(&button1, OB_EVENT_PRESS, B1_press)
+OB_AttachCallback(&button1, OB_EV_PRESS, B1_press)
 
 while (1) {
     OB_Tick(&button1); // Call ticks in main loop
@@ -73,7 +73,7 @@ void B1_press() { // Basic function to count button presses
     press_cnt++;
 }
 
-OB_AttachCallback(&button1, OB_EVENT_PRESS, B1_press); // Attach the B1_press function to the OB_EVENT_PRESS event for button1.
+OB_AttachCallback(&button1, OB_EV_PRESS, B1_press); // Attach the B1_press function to the OB_EV_PRESS event for button1.
 ```
 
 ### Don't forget to `OB_Tick()`
