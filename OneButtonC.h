@@ -17,7 +17,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "stm32f4xx_hal.h" // Include the HAL library appropriate for your MCU
+#include "cy_pdl.h" // Include the HAL library appropriate for your MCU
 
 // Define the invalid pin
 #define INVALID_PIN UINT16_MAX
@@ -44,8 +44,9 @@ typedef enum {
 
 // Main struct for OneButton
 typedef struct {
-  GPIO_TypeDef* port;
-  uint16_t pin;
+	
+  GPIO_PRT_Type *port;
+  uint32_t pin;
  
   //Intervals
   int16_t debounce_ms;
@@ -100,7 +101,7 @@ typedef enum {
 // ----- Function prototypes -----
 
 void OB_Init(OneButton_t* btn);
-void OB_Setup(OneButton_t* btn, GPIO_TypeDef* port, uint16_t pin, bool activeLow);
+void OB_Setup(OneButton_t* btn, GPIO_PRT_Type* port, uint32_t pin, bool activeLow );
 
 bool OB_Debounce(OneButton_t* btn, bool newLevel);
 void OB_Tick(OneButton_t* btn /*, bool rawLevel*/);
